@@ -63,7 +63,7 @@ class MainWindow(QWidget):
         )
         layout.addWidget(self.color_box)
 
-        self.color_box.setStyleSheet('background=color: lightgray')
+        self.color_box.setStyleSheet('background-color: rgb(0, 0, 0)')
 
     def button_method(self, is_running: bool):
         self.toggle_button.setText("stop" if is_running else "start")
@@ -83,6 +83,7 @@ class MainWindow(QWidget):
     def slider_method(self):
         value = self.slider.value()
         self.secondary_spin_box.setValue(value)
+        self.color_box.setStyleSheet(f'background-color: rgb({value}, {value}, {value})')
 
 
 
