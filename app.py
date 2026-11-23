@@ -5,8 +5,10 @@ from PySide6.QtWidgets import (
     QAbstractSpinBox,
     QApplication,
     QHBoxLayout,
+    QLabel,
     QPushButton,
     QSlider,
+    QSizePolicy,
     QSpinBox,
     QVBoxLayout,
     QWidget,
@@ -41,6 +43,7 @@ class MainWindow(QWidget):
         right_layout = QVBoxLayout()
         self.slider = QSlider(Qt.Orientation.Vertical)
         self.slider.setRange(0, 255)
+        self.slider.valueChanged.connect(self.slider_method)
         right_layout.addWidget(self.slider)
 
         self.secondary_spin_box = QSpinBox()
@@ -52,6 +55,15 @@ class MainWindow(QWidget):
         self.secondary_spin_box.setStyleSheet("background-color: lightgray;")
         right_layout.addWidget(self.secondary_spin_box)
         layout.addLayout(right_layout)
+
+        self.color_box = QLabel()
+        self.color_box.setMinimumWidth(100)
+        self.color_box.setSizePolicy(
+            QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding
+        )
+        layout.addWidget(self.color_box)
+
+        self.color_box.setStyleSheet('background=color: lightgray')
 
     def button_method(self, is_running: bool):
         self.toggle_button.setText("stop" if is_running else "start")
@@ -66,7 +78,11 @@ class MainWindow(QWidget):
         self.spin_box.setValue(self.counter)
         if self.counter == 500:
             self.timer.stop()
-            self.toggle_button
+            self.toggle_button.setChecked(False)
+
+    def slider_method(self):
+        value = self.slider.value()
+        self.secondary_spin_box.setValue(value)
 
 
 
